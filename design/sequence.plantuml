@@ -1,0 +1,8 @@
+@startuml
+
+participant "an Order" as Order
+participant "an Order Line" as OrderLine
+participant "a Product" as Product
+participant "a Customer" as Customer
+
+@enduml 
