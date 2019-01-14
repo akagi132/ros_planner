@@ -24,6 +24,27 @@ class goal_functions as "goal_functions.h" {
     +bool transformGlobalPlan(const Buffer& tf,\n\t\t\tconst vector<PoseStamed>& global_plan,\n\t\t\tconst PoseStamed& global_robot_pose,\n\t\t\tconst Costmap2D& costmap,\n\t\t\tconst string& global_frame,\n\t\t\tvector<PoseStamped>& transformed_plan)
     +getGoalPose(const Buffer& tf,\n\t\tconst vector<PoseStamped>& global_plan,\n\t\tstring& global_frame,\n\t\tPoseStamped& goal_pose)
     +isGoalReached(const Buffer& tf,\n\t\tconst vector<PoseStamped>& global_plan,\n\t\tconst Costmap2D& costmap,\n\t\tconst string& global_frame,\n\t\tconst Odometry& base_odom,\n\t\tdouble rot_stopped_vel,\n\t\tdouble trans_stopped_vel\n\t\tdouble xy_goal_tolerance,\n\t\tdouble yaw_goal_tolerance)
+    +bool stopped(const Odometry& base_odom,\n\t\tconst double& rot_stopped_velocity,\n\t\tconst double& trans_stopped_velocity)
+}
+
+class "MapCell" {
+    +uint cx, cy
+    +double target_dist
+    +bool target_mark
+    +bool within_robot
+}
+
+class "BaseGlobalPlanner" {
+    +bool makePlan(const PoseStamped& start,\n\t\tconst PoseStamped& goal,\n\t\tvector<PoseStamped>& plan)
+    +bool makePlan(const PoseStamped& start,\n\t\tconst PoseStamed& goal,\n\t\tvector<PoseStamped>& plan,\n\t\tdouble& cost)
+    +void initialize(string name, Costmap2DROS* costmap_ros)
+}
+
+class "BaseLocalPlanner" {
+    +bool computeVelocityCommands(Twist& cmd_vel)
+    +bool isGoalReached()
+    +bool setPlan(const vector<PoseStamped>& plan)
+    +initialize(string name, Buffer* tf, Costmap2DROS* costmap_ros)
 }
 
 @enduml
