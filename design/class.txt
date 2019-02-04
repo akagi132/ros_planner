@@ -47,4 +47,33 @@ class "BaseLocalPlanner" {
     +initialize(string name, Buffer* tf, Costmap2DROS* costmap_ros)
 }
 
+class "CostmapModel" {
+    +double footprintCost(const Point& position, const vector<Point>& footprint,\n\t\tdouble inscribed_radius, double circumscribed_radius)
+    +double lineCost(int x0, int x1, int y0, int y1)
+    +double pointCost(int x, int y)
+    -Costmap2D& costmap_
+}
+
+class "MapGrid" {
+    +inline MapCell& operator() (uint x, uint y) const
+    +inline MapCell operator() (uint x, uint y)
+    +inline MapCell& getCell(uint x, uint y)
+    +MapGrid& operator= (const MapGrid& mg)
+    +void resetPathDist()
+    +void sizeCheck(uint size_x, uint size_y)
+    +void commonInit()
+    +size_t getIndex(int x, int y)
+    +inline double obstacleCosts()
+    +inline double unreachableCellCosts()
+    +inline bool updatePathCell(MapCell* current_cell, MapCell* check_cell, const Costmap2D& costmap)
+    +static void adjustPlanResolution(const vector<PoseStamped>& global_plan_in,\n\t\tvector<PoseStamped>& global_plan_out,\n\t\tdouble resolution)
+    +void computeTargetDistance(queue<MapCell*>& dist_queue, const Costmap2D& costmap)
+    +void computeGoalDistance(queue<MapCell*>& dist_queue, const Costmap2D& costmap)
+    +void setTargetCells(const Costmap2D& costmap, const vector<PoseStamped>& global_plan)
+    +void setLocalGoal(const Costmap2D& costmap, const vector<PoseStamped>& global_plan)
+    +double goal_x_, goal_y_
+    +uint size_x_, size_y_
+    -vector<MapCell> map_
+}
+
 @enduml
