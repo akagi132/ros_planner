@@ -1,0 +1,28 @@
+@startuml{MapGrid.png}
+
+scale 1.5
+
+class "MapGrid" {
+    +inline MapCell& operator() (uint x, uint y) const
+    +inline MapCell operator() (uint x, uint y)
+    +inline MapCell& getCell(uint x, uint y)
+    +MapGrid& operator= (const MapGrid& mg)
+    +void resetPathDist()   // パスをリセット
+    +void sizeCheck(uint size_x, uint size_y)   // コストマップをリサイズ＆内部変数の更新
+    +void commonInit()  // コンストラクタ間で共有できる初期化コード
+    +size_t getIndex(int x, int y)  // x, y 2次元のマップ表現を、1次元配列で返す
+    +inline double obstacleCosts()  // セルが障害物かを示す
+    +inline double unreachableCellCosts()   // Unreachableなセルを示す
+    +inline bool updatePathCell(MapCell* current_cell, MapCell* check_cell, const Costmap2D& costmap)　// パス距離計算でセルの距離を更新する
+    +static void adjustPlanResolution(const vector<PoseStamped>& global_plan_in,\n\t\tvector<PoseStamped>& global_plan_out,\n\t\tdouble resolution) // グローバルプランの解像度を上げる。細かくグローバルプランを立てる場合に必要。
+    +void computeTargetDistance(queue<MapCell*>& dist_queue, const Costmap2D& costmap) // ローカルコストマップの各セルから、ローカルパスのゴールまでの距離を計算
+    +void computeGoalDistance(queue<MapCell*>& dist_queue, const Costmap2D& costmap) // ローカルコストマップの各セルから、グローバルパスのゴールまでの距離を計算
+    +void setTargetCells(const Costmap2D& costmap, const vector<PoseStamped>& global_plan) // グローバルプランに基づき、ゴールセルを設定する
+    +void setLocalGoal(const Costmap2D& costmap, const vector<PoseStamped>& global_plan) // 次のローカルパスのゴールを設定する
+    +double goal_x_, goal_y_ // ゴールまでの距離
+    +uint size_x_, size_y_ // コストマップサイズ
+    -vector<MapCell> map_ // コストマップ（セルの集合）
+}
+note top: コストマップを管理
+
+@enduml

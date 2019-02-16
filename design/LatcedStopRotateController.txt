@@ -1,0 +1,17 @@
+@startuml{LachedStopRotateController.png}
+
+scale 1.5
+
+class "LatchedStopRotateController" {
+    +bool isPositionReached(LocalPlannerUtil* planner_util, const PoseStamped& global_pose)
+    +bool isGoalReached(LocalPlannerUtil* planner_util, OdometryHelperRos& odom_helper, const PoseStamped& global_pose)
+    +void resetLatching()
+    +bool stopWithAccLimits(const PoseStamped& global_pose, const PoseStamped& robot_vel, Twist& cmd_vel, Vector3f acc_lim, double sim_period, function<bool (Vector3f pos, Vector3f vel, Vector3f vel_samples)> obstacle_check)
+    +bool rotateToGoal(const PoseStamped& global_pose, const PoseStamped& robot_vel, double goal_th, Twist& cmd_vel, Vector3f acc_lim, double sim_period, LocalPlannerLimits& limits, function<bool (Vector3f pos, Vector3f vel, Vector3f vel_samples)> obstacle_check)
+    +bool computeVelocityCommandsStopRotate(Twist& cmd_vel, double sim_period, LocalPlannerUtil* planner_util, OdometryHelperRos& odom_helper, const PoseStamped& global_pose, function<bool (Vector3f pos, Vector3f vel, Vector3f vel_samples)> obstacle_check)
+    -inline double sign(double x)
+    -bool latch_xy_goal_tolerance_, xy_tolerance_latch_
+    -bool rotating_to_goal_
+}
+
+@enduml

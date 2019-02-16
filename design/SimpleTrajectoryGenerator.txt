@@ -1,0 +1,27 @@
+@startuml{SimpleTrajectoryGenerator.png}
+
+scale 1.5
+
+class SimpleTrajectoryGenerator {
+    +void initialise(const Vector3f& pos, const Vector3f& vel, const Vector3f& goal, LocalPlannerLimits* limits, Vector3f& vsamples, vector<Vector3f> additional_samples, bool discretize_by_time = false )
+    +void initialise(const Vector3f& pos, const Vector3f& vel, const Vector3f& goal, LocalPlannerLimits* limits, Vector3f& vsamples, bool discretize_by_time = false )
+    +void setParameters(double sim_time, double sim_granularity, double angular_sim_granularity, bool use_dwa = false, double sim_period = 0.0)
+    +bool hasMoreTrajectories()
+    +bool nextTrajectory(Trajectory &traj)
+    +static Vector3f computeNewPositions(const Vector3f& pos, const Vector3f& vel, double dt)
+    +bool generateTrajectory(Vector3f pos, Vector3f vel, Vector3f sample_target_vel, Trajectory& traj)
+    #uint next_sample_index_
+    #vector<Vector3f> sample_params_
+    #LocalPlannerLimits* limits_
+    #Vector3f pos_
+    #Vector3f vel_
+    #bool continued_acceleration_
+    #bool discretize_by_time_
+    #double sim_time_, sim_granulartity_, angular_sim_granularity_
+    #bool use_dwa_
+    #double sim_period_
+}
+
+note top: 
+
+@enduml

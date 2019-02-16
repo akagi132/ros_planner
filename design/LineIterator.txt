@@ -1,0 +1,22 @@
+@startuml{LocalIterator.png}
+
+scale 1.5
+
+class "LineIterator" {
+    +LineIterator(int x0, int y0, int x1, int y1)
+    +bool isValid() const
+    +void advance()
+    +int getX() const
+    +int getY() const
+    +int getX0() const
+    +int getY0() const
+    +int getX1() const
+    +int getY1() const
+    -int x0_, y0_, x1_, y1_, x_, y_
+    -int deltax_, deltay_
+    -int curpixel_
+    -int xinc1_, xinc2_, yinc1_, yinc2_
+    -int den_, num_, numadd_, numpixels_
+}
+
+@enduml

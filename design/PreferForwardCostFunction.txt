@@ -1,0 +1,15 @@
+@startuml{PreferForwardCostFunction.png}
+
+scale 1.5
+
+class PreferForwardCostFunction {
+    +PreferForwardCostFunction(double penalty)
+    +double scoreTrajectory(Trajectory &traj)
+    +bool prepare()
+    +void setPenalty(double penalty)
+    -double penalty_
+}
+
+note top: 軌跡コントローラのために、自由空間の衝突チェックを提供
+
+@enduml

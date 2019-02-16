@@ -1,0 +1,12 @@
+@startuml{MapCell.png}
+
+scale 1.5
+
+class "MapCell" {
+    +uint cx, cy
+    +double target_dist
+    +bool target_mark
+    +bool within_robot
+}
+
+@enduml

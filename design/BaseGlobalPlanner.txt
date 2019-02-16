@@ -1,0 +1,11 @@
+@startuml{BaseGlobalPlanner.png}
+
+scale 1.5
+
+class "BaseGlobalPlanner" {
+    +bool makePlan(const PoseStamped& start,\n\t\tconst PoseStamped& goal,\n\t\tvector<PoseStamped>& plan)
+    +bool makePlan(const PoseStamped& start,\n\t\tconst PoseStamed& goal,\n\t\tvector<PoseStamped>& plan,\n\t\tdouble& cost)
+    +void initialize(string name, Costmap2DROS* costmap_ros)
+}
+
+@enduml

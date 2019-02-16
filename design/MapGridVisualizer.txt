@@ -1,0 +1,15 @@
+@startuml{MapGridVisualizer.png}
+
+scale 1.5
+
+class "MapGridVisualizer" {
+    +void initialize(const string name, string frame, function<bool (int cx, int cy, float &path_cost, float &goal_cost, float &occ_cost, float &total_cost)> cost_function)
+    +void publishCostCloud(const Costmap2D* costmap_p_)
+    -string name
+    -function<bool (int cx, int cy, float &path_cost, float &goal_cost, float &occ_cost, float &total_cost)> cost_function_
+    -NodeHandle ns_nh_
+    -string frame_id_
+    Publisher pub_
+}
+
+@enduml

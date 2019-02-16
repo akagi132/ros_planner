@@ -1,0 +1,16 @@
+@startuml{goal_functions.png}
+
+scale 1.5
+
+class goal_functions as "goal_functions.h" {
+    +double getGoalPositionDistance(const PoseStamped& global_pose,\n\t\t\tdouble goal_x, double goal_y)
+    +double getGoalOrientationAngleDifference(const PoseStamped& global_pose,\n\t\t\tdouble goal_th)
+    +void publishPlan(const vector<PoseStamped>& path, const Publisher& pub)
+    +prunePlan(const PoseStamped& global_pose,\n\t\t\t\tvector<PoseStamped>& plan,\n\t\t\t\tvector<PoseStamed>& global_plan)
+    +bool transformGlobalPlan(const Buffer& tf,\n\t\t\tconst vector<PoseStamed>& global_plan,\n\t\t\tconst PoseStamed& global_robot_pose,\n\t\t\tconst Costmap2D& costmap,\n\t\t\tconst string& global_frame,\n\t\t\tvector<PoseStamped>& transformed_plan)
+    +getGoalPose(const Buffer& tf,\n\t\tconst vector<PoseStamped>& global_plan,\n\t\tstring& global_frame,\n\t\tPoseStamped& goal_pose)
+    +isGoalReached(const Buffer& tf,\n\t\tconst vector<PoseStamped>& global_plan,\n\t\tconst Costmap2D& costmap,\n\t\tconst string& global_frame,\n\t\tconst Odometry& base_odom,\n\t\tdouble rot_stopped_vel,\n\t\tdouble trans_stopped_vel\n\t\tdouble xy_goal_tolerance,\n\t\tdouble yaw_goal_tolerance)
+    +bool stopped(const Odometry& base_odom,\n\t\tconst double& rot_stopped_velocity,\n\t\tconst double& trans_stopped_velocity)
+}
+
+@enduml

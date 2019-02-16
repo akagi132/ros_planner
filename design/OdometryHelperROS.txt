@@ -1,0 +1,20 @@
+@startuml{OdometryHelperROS.png}
+
+scale 1.5
+
+class "OdometryHelperROS" {
+    +void odomCallback(const Odometry::ConstPtr& msg)
+    note left: Odometry データを受け取った際のコールバック
+    +void getOdom(Odometry& base_odom)
+    +void getRobotVel(PoseStamped& robot_vel)
+    +void setOdomTopic(string odom_topic) // Odometryをセットする。前のトピックからの購読を中止する。
+    +string getOdomTopic() // 現在のOdometry Topic を返す
+    -string odom_topic_
+    -Subscriber odom_sum_
+    -Odometry base_odom_
+    -mutex odom_mutex_
+    -string frame_id_ // tf のフレームID
+}
+note top: Odometry Topic を基にロボット速度・位置などを決定する
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml{MapGridCostFunction.png}
+
+scale 1.5
+
+class "MapGridCostFunction" {
+    +MapGridCostFunction(Costmap2D* costmap, double xshift = 0.0, double yshift = 0.0, bool is_local_goal_function = false, CostAggregationType aggregationType = Last)
+    +void setTargetPoses(std::vector<PoseStamped> target_poses)
+    +void setXShift(double xshift)
+    +void setYShift(double yshift)
+    +void setStopOnFailure(bool stop_on_failure)
+    +bool prepare()
+    +double scoreTrajectory(Trajectory &traj)
+    double obstacleCosts()
+    double getCellCosts(uint cx, uint cy)
+    -vector<PoseStamped> target_poses_
+    -Costmap2D* costmap_
+    -MapGrid map_
+    -CostAggregationType aggregationType_
+    double xshift_
+    double yshift_
+    bool is_local_goal_function_
+    bool stop_on_failure_
+}
+note top: コストマップの値を計算する
+
+@enduml

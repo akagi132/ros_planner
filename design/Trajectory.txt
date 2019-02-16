@@ -1,0 +1,19 @@
+@startuml{Trajectory.png}
+
+scale 1.5
+
+class "Trajectory" {
+    +double xv_, yv_, thetav_
+    +double cost_
+    +double time_delta_
+    -vector<double> x_pts_, y_pts_, th_pts_
+    +void getPoint(uint index, double& x, double& y, double& z, double& th)
+    +void setPoint(uint index, double& x, double& y, double& z, double& th)
+    +void addPoint(double& x, double& y, double& th)
+    +void getEndPoint(double& x, double& y, double& th)
+    +void resetPoints()
+    +uint getPointSize()
+}
+note top: ãOê’Çä«óù
+
+@enduml

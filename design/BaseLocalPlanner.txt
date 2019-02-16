@@ -1,0 +1,12 @@
+@startuml{BaseLocalPlanner.png}
+
+scale 1.5
+
+class "BaseLocalPlanner" {
+    +bool computeVelocityCommands(Twist& cmd_vel)
+    +bool isGoalReached()
+    +bool setPlan(const vector<PoseStamped>& plan)
+    +initialize(string name, Buffer* tf, Costmap2DROS* costmap_ros)
+}
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml{LocalPlannerUtil.png}
+
+scale 1.5
+
+class "LocalPlannerUtil" {
+    -string name_
+    -string global_frame_
+    -Costmap2D* costmap_
+    -Buffer* tf_
+    -vector<PoseStamped> global_plan_
+    -mutex limits_configuration_mutex_
+    -bool setup_
+    -LocalPlannerLimits default_limits_
+    -LocalPlannerLimits limits_
+    -bool initialized_
+    +void reconfigureCB(LocalPlannerLimits &config, bool restore_defaults)
+    +LocalPlannerUtil() : initialized_(false) {}
+    +void initialize(Buffer* tf, Costmap2D* costmap, string global_frame)
+    +bool getGoal(PoseStamped& goal_pose)
+    +bool setPlan(const vector<PoseStamped>& orig_global_plan)
+    +bool getLocalPlan(const PoseStamped& global_pose, vecotr<PoseStamped>& transformed_plan)
+    +Costmap2D* getCostmap()
+    +LocalPlannerLimits getCurrentLimits()
+    +string getGlobalFrame()
+}
+
+@enduml

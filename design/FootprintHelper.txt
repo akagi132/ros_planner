@@ -1,0 +1,11 @@
+@startuml{FootprintHelper.png}
+
+scale 1.5
+
+class "FootprintHelper" {
+    +vector<Position2DInt> getFootprintCells(Vector3f pos, vector<Point> footprint_spec, const Costmap2D& costmap, bool fill)
+    +void  getLineCells(int x0, int x1, int y0, vector<Position2DInt>& pts)
+    +void getFillCells(vector<Position2DInt>& footprint)
+}
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml{PointGrid.png}
+
+scale 1.5
+
+class "PointGrid" {
+    +PointGrid(double width, double height, double resolution, Point origin, double max_z, double obstacle_range, double min_separation)
+    +void getPointsInRange(const Point& lower_left, const Point& upper_left, vector< list<Point32>* >& points)
+    +virtual double footPrintCost(const Point& position, const vector<Point>& footprint, double inscribed_radius, double circumscribed_radius)
+    +void updateWorld(const vecotr<Point>& footprint, const vector<Observation>& observations, const vecotr<PlannerLaserScan>& laser_scans)
+    +inline bool gridCoords(Point pt, uint& gx, uint gy)  // World座標からGrid座標へ変換
+    +inline bool getCellBounds(uint gx, uint gy, Point& lower_left, Point& upper_right) // ポイントグリッド内のセルのワールド座標での境界を取得
+    +inline bool sq_distance(const Point32& pt1, const Point32& pt2) // 2点間の距離を計算
+    +inline bool gridCoords(const Point32& pt, uint& gx, uint& gy) // World座標からGrid座標へ変換
+    +inline uint gridIndex(uint gx, uint gy) // セル座標をインデックス値で返す（return gx + gy * width_）
+    +inline double orient(const Point& a, const Point& b, const Point32 c) // ベクトルA->Bにおいて、Cの向きを確認
+    +template<typename T> inline double orient(const T& a, const T& b, const T& c) // 同上。
+    +inline bool segIntersect(const Point32& v1, const Point32& v2, const Point32& u1, const Point32& u2) // 2本のラインが交差しているかチェック
+    +inline bool intersectionPoint(const Point& v1, const Point& v2, const Point& u1, const Point& u2, Point& result) // 2本の線が交差している点を返す
+    +bool ptInPolygon(const Point32& pt, const vecotr<Point>& poly) // 点がポリゴンの中にあるかチェック
+    +void insert(const Point32& pt) // 点をPointGridに追加
+    +double nearestNeighborDistance(const Point32& pt)
+    +double getNearestInCell(const Point32& pt, uint gx, uint gy)
+    +void removePointsInPolygon(const vector<Point> poly)
+    +void removePointsInScanBoundry(const PlannerLaserScan& laser_scan)
+    +bool ptInScan(const Point32& pt, const PlannerLaserScan& laser_scan)
+    +void getPoints(PointCloud2& cloud)
+    -double resolution_
+    -Point origin_
+    -uint width_
+    -uint height_
+    -vector< list<Point32> > cells_
+    -double max_z_
+    -double sq_obstacle_range_
+    -double sq_min_separation_
+    -vector< list<Point32>* > points_
+}
+note top: 軌跡コントローラのために、自由空間の衝突チェックを提供
+
+@enduml

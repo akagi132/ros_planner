@@ -1,0 +1,17 @@
+@startuml{SimpleScoredSamplingPlanner.png}
+
+scale 1.5
+
+class SimpleScoredSamplingPlanner {
+    +SimpleScoredSamplingPlanner()
+    +SimpleScoredSamplingPlanner(vector<TrajectorySampleGenerator*> gen_list, vector<TrajectoryCostFunction*>& critics, int max_samples = -1)
+    +double scoreTrajectory(Trajectory &traj, double best_traj_cost)
+    +bool findBestTrajectory(Trajectory& traj, vector<Trajectory>* all_explored = 0)
+    -vector<TrajectorySampleGenerator*> gen_list_
+    -vector<TrajectoryCostFunction*> critics_
+    -int max_samples_
+}
+
+note top: 
+
+@enduml

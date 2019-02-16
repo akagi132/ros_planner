@@ -1,0 +1,12 @@
+@startuml{CostmapModel.png}
+
+scale 1.5
+
+class "CostmapModel" {
+    +double footprintCost(const Point& position, const vector<Point>& footprint,\n\t\tdouble inscribed_radius, double circumscribed_radius)
+    +double lineCost(int x0, int x1, int y0, int y1)
+    +double pointCost(int x, int y)
+    -Costmap2D& costmap_
+}
+
+@enduml
