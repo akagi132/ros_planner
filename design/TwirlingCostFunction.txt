@@ -1,0 +1,13 @@
+@startuml{TwirlingCostFunction.png}
+
+scale 1.5
+
+class TwirlingCostFunction {
+    +TwirlingCostFunction()
+    +double scoreTrajectory(Trajectory &traj)
+    +bool prepare()
+}
+
+note top: 
+
+@enduml

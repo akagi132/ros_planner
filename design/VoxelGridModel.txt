@@ -1,0 +1,31 @@
+@startuml{VoxelGridModel.png}
+
+scale 1.5
+
+class VoxelGridModel {
+    +VoxelGridModel(double size_x, double size_y, double size_z, double xy_resolution, double z_resolution,\n\t\t\t\tdouble origin_x, double origin_y, double origin_z, double max_z, double obstacle_range)
+    +virtual double footprintCost(const Point& position, const vector<Point>& footprint,\n\t\t\t\tdouble inscribed_radius, double circumscribed_radius)
+    +void updateWorld(const vector<Point>& footprint,const vector<Observation>& observations, const vector<PlanarLaserScan>& laser_scans)
+    +void getPoints(PointCloud2& cloud)
+    -double lineCost(int x0, int x1, int y0, int y1)
+    -double pointCost(int x, int y)
+    -void removePointsInScanBoundry(const PlanarLaserScan& laser_scan, double raytrace_range)
+    -inline bool worldToMap3D(double wx, double wy, double wz, unsigned int& mx, unsigned int& my, unsigned int& mz)
+    -inline bool worldToMap2D(double wx, double wy, unsigned int& mx, unsigned int& my)
+    -inline void mapToWorld3D(unsigned int mx, unsigned int my, unsigned int mz, double& wx, double& wy, double& wz)
+    -inline void mapToWorld2D(unsigned int mx, unsigned int my, double& wx, double& wy)
+    -inline double dist(double x0, double y0, double z0, double x1, double y1, double z1)
+    -inline void insert(const geometry_msgs::Point32& pt)
+    -voxel_grid::VoxelGrid obstacle_grid_
+    -double xy_resolution_
+    -double z_resolution_
+    -double origin_x_
+    -double origin_y_
+    -double origin_z_
+    -double max_z_
+    -double sq_obstacle_range_
+}
+
+note top: 
+
+@enduml

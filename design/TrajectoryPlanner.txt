@@ -1,0 +1,73 @@
+@startuml{TrajectoryPlanner.png}
+
+scale 1.5
+
+class TrajectoryPlanner {
+    +TrajectoryPlanner(WorldModel& world_model,\n\t\t\t\tconst Cosmap2D& costmap,\n\t\t\t\tvector<Point> footprint_spec,\n\t\t\t\tdouble acc_lim_x = 1.0, double acc_lim_y = 1.0, double acc_lim_theta = 1.0,\n\t\t\t\tdouble sim_time = 1.0, double sim_granularity = 0.025,\n\t\t\t\tint vx_samples = 20, int vtheta_samples = 20,\n\t\t\t\tdouble pdist_scale = 0.6, double gdist_scale = 0.8, double occdist_scale = 0.2,\n\t\t\t\tdouble heading_lookahead = 0.325, double oscillation_reset_dist = 0.05,\n\t\t\t\tdouble escape_reset_dist = 0.10, double escape_reset_theta = M_PI_2,\n\t\t\t\tbool holonomic_robot = true,\n\t\t\t\tdouble max_vel_x = 0.5, double min_vel_x = 0.1,double max_vel_th = 1.0, double min_vel_th = -1.0, double min_in_place_vel_th = 0.4,\n\t\t\t\tdouble backup_vel = -0.1,\n\t\t\t\tbool dwa = false, bool heading_scoring = false, double heading_scoring_timestep = 0.1,\n\t\t\t\tbool meter_scoring = true,\n\t\t\t\tbool simple_attractor = false,\n\t\t\t\tstd::vector<double> y_vels = std::vector<double>(0),\n\t\t\t\tdouble stop_time_buffer = 0.2,\n\t\t\t\tdouble sim_period = 0.1, double angular_sim_granularity = 0.025)
+    +void reconfigure(BaseLocalPlannerConfig &cfg)
+    +Trajectory findBestPath(const PoseStamped& global_pose,\n\t\t\t\tPoseStamped& global_vel, PoseStamped& drive_velocities);
+    +void void updatePlan(vector<PoseStamped>& new_plan, bool compute_dists = false)
+    +void getLocalGoal(double& x, double& y)
+    +bool checkTrajectory(double x, double y, double theta, double vx, double vy,\n\t\t\t\tdouble vtheta, double vx_samp, double vy_samp, double vtheta_samp)
+    +double scoreTrajectory(double x, double y, double theta, double vx, double vy,\n\t\t\t\tdouble vtheta, double vx_samp, double vy_samp, double vtheta_samp)
+    +bool getCellCosts(int cx, int cy, float &path_cost, float &goal_cost, float &occ_cost, float &total_cost)
+    +void setFootprint(vector<Point> footprint)
+    +Polygon getFootprintPolygon() const
+    +vector<Point> getFootprint() const
+    -Trajectory createTrajectories(double x, double y, double theta, double vx, double vy, double vtheta,\n\t\t\t\tdouble acc_x, double acc_y, double acc_theta)
+    -void generateTrajectory(double x, double y, double theta, double vx, double vy,\n\t\t\t\tdouble vtheta, double vx_samp, double vy_samp, double vtheta_samp, double acc_x, double acc_y,\n\t\t\t\tdouble acc_theta, double impossible_cost, Trajectory& traj)
+    -double footprintCost(double x_i, double y_i, double theta_i)
+    -FootprintHelper footprint_helper_
+    -MapGrid path_map_
+    -MapGrid goal_map_
+    -const Costmap2D& costmap_
+    -WorldModel& world_model_
+    -vector<Point> footprint_spec_
+    -vector<PoseStamped> global_plan_
+    -bool stuck_left, stuck_right
+    -bool rotating_left, rotating_right
+    -bool stuck_left_strafe, stuck_right_strafe
+    -bool strafe_right, strafe_left
+    -bool escaping_
+    -bool meter_scoring_
+    -double goal_x_,goal_y_
+    -double final_goal_x_, final_goal_y_
+    -bool final_goal_position_valid_
+    -double sim_time_
+    -double sim_granularity_
+    -double angular_sim_granularity_
+    -int vx_samples_
+    -int vtheta_samples_
+    -double pdist_scale_, gdist_scale_, occdist_scale_
+    -double acc_lim_x_, acc_lim_y_, acc_lim_theta_
+    -double prev_x_, prev_y_
+    -double escape_x_, escape_y_, escape_theta_
+    -Trajectory traj_one, traj_two
+    -double heading_lookahead_
+    -double oscillation_reset_dist_
+    -double escape_reset_dist_, escape_reset_theta_
+    -bool holonomic_robot_
+    -double max_vel_x_, min_vel_x_, max_vel_th_, min_vel_th_, min_in_place_vel_th_
+    -double backup_vel_
+    -bool dwa_
+    -bool heading_scoring_
+    -double heading_scoring_timestep_
+    -bool simple_attractor_
+    -vector<double> y_vels_
+    -double stop_time_buffer_
+    -double sim_period_
+    -double inscribed_radius_, circumscribed_radius_
+    -mutex configuration_mutex_
+    -inline double computeNewXPosition(double xi, double vx, double vy, double theta, double dt)
+    -inline double computeNewYPosition(double yi, double vx, double vy, double theta, double dt)
+    -inline double computeNewThetaPosition(double thetai, double vth, double dt)
+    -inline double computeNewVelocity(double vg, double vi, double a_max, double dt)
+    -void getMaxSpeedToStopInTime(double time, double& vx, double& vy, double& vth)
+    -double lineCost(int x0, int x1, int y0, int y1)
+    -double pointCost(int x, int y)
+    -double headingDiff(int cell_x, int cell_y, double x, double y, double heading)
+}
+
+note top: 
+
+@enduml

@@ -1,8 +1,52 @@
 @startuml
+scale 1.5
 
-participant "an Order" as Order
-participant "an Order Line" as OrderLine
-participant "a Product" as Product
-participant "a Customer" as Customer
+title: move_base起動時シーケンス
+
+actor "User" as user
+participant "main" as main
+participant "MoveBase" as move_base
+participant "MoveBaseActionServer" as move_base_action_server
+participant "Costmap2DROS(global)" as costmap_2d_global
+participant "Costmap2DROS(local)" as costmap_2d_local
+participant "ClassLoader" as class_loader
+participant "BaseLocalPlanner" as base_local_planner
+participant "BaseGlobalPlanner" as base_global_planner
+
+
+activate user
+user -> main: move_base起動
+activate main
+main -> main: MoveBaseに必要な、tfとBufferの用意
+main -> move_base: MoveBase move_base(buffer)
+activate move_base #FFBBBB
+move_base -> move_base:コンストラクタ実行
+activate move_base #DarkSalmon
+
+move_base -> move_base_action_server: アクションサーバーの生成
+move_base_action_server -> move_base:
+
+move_base -> move_base: 各種内部変数初期化
+note right: ・プランナーパラメータの初期化（例：グローバル/ローカル プランナーの選択）\n・プランナー系変数の初期化\n・プランナースレッドの作成\n・Topic配信用変数\n・コストマップ系パラメータ初期化）
+
+move_base -> costmap_2d_global: グローバルコストマップ生成
+move_base -> class_loader: グローバルプランナー生成
+move_base -> base_global_planner: プランナー初期化
+
+move_base -> costmap_2d_local: ローカルコストマップ生成
+move_base -> class_loader: ローカルプランナー生成
+move_base -> base_local_planner: プランナー初期化
+
+move_base -> costmap_2d: ローカル / グローバルコストマップの起動（センサーに応じて、コストマップの更新が行われる）
+move_base -> move_base: プラン生成のサービスを準備
+move_base -> move_base: コストマップをクリアする人を生成
+move_base -> move_base: 状態変数の初期化（PLANNING）
+move_base -> move_base: 回復動作を管理するリストの個数を0に
+move_base -> move_base_action_server: セットアップが完了したので、アクションサーバーを起動
+
+
+move_base -> main: インスタンス
+deactivate move_base
+main -> main: ros::spin()
 
 @enduml 
